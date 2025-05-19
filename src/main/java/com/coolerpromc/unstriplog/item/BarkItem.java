@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +40,7 @@ public class BarkItem extends Item {
                     String originalPath = path.substring("stripped_".length());
                     ResourceLocation originalId = ResourceLocation.fromNamespaceAndPath(id.getNamespace(), originalPath);
 
-                    Block original = BuiltInRegistries.BLOCK.get(originalId);
+                    Block original = BuiltInRegistries.BLOCK.getValue(originalId);
                     if (original != Blocks.AIR) {
                         REVERSE_STRIPPED.put(block, original);
                     }
@@ -79,7 +80,7 @@ public class BarkItem extends Item {
     }
 
     @Override
-    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType, FuelValues fuelValues) {
         return 150;
     }
 }
