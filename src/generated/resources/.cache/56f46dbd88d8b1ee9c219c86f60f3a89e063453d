@@ -1,3 +1,3 @@
-// 1.21.5	2025-05-18T20:26:32.4445733	Unstrip Log recipes
-347ee719306015cc286a09fde6dc020f8789abd6 data/minecraft/advancement/recipes/misc/paper.json
-53cd3b34904e231f748212511d7c7eda9f8b0534 data/minecraft/recipe/paper.json
+// 1.21.5	2025-05-21T08:12:52.4190147	Unstrip Log recipes
+afeef0e740c81c4a16952d26690b02b933751cb0 data/minecraft/advancement/recipes/misc/paper_from_bark.json
+53cd3b34904e231f748212511d7c7eda9f8b0534 data/minecraft/recipe/paper_from_bark.json
