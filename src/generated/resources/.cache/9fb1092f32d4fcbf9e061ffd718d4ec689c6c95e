@@ -1,3 +1,3 @@
-// 1.21.1	2025-05-18T21:11:39.8866694	Recipes
-347ee719306015cc286a09fde6dc020f8789abd6 data/minecraft/advancement/recipes/misc/paper.json
-ccc532be30b1c06a44fac4c4beb0644e3e3026df data/minecraft/recipe/paper.json
+// 1.21.1	2025-05-21T11:38:28.170684	Recipes
+afeef0e740c81c4a16952d26690b02b933751cb0 data/minecraft/advancement/recipes/misc/paper_from_bark.json
+ccc532be30b1c06a44fac4c4beb0644e3e3026df data/minecraft/recipe/paper_from_bark.json

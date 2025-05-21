@@ -22,6 +22,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("##")
                 .define('#', ModItems.BARK)
                 .unlockedBy(getHasName(ModItems.BARK), has(ModItems.BARK))
-                .save(recipeOutput);
+                .save(recipeOutput, "paper_from_bark");
     }
 }
