@@ -21,8 +21,8 @@ public class DataGenerators {
 
         event.addProvider(new ModRecipeProvider.Runner(packOutput, event.getLookupProvider()));
 
-        ModBlockTagGenerator blockTagGenerator = event.addProvider(new ModBlockTagGenerator(packOutput, lookupProvider));
-        event.addProvider(new ModItemTagProvider(packOutput, lookupProvider, blockTagGenerator.contentsGetter()));
+        event.addProvider(new ModBlockTagGenerator(packOutput, lookupProvider));
+        event.addProvider(new ModItemTagProvider(packOutput, lookupProvider));
 
     }
 }
