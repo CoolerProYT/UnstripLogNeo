@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.103'
+    id 'net.neoforged.moddev' version '2.0.107'
     id 'idea'
 }
 
@@ -14,6 +14,13 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    maven {
+        name = "Maven for PR #2639"
+        url = uri("https://prmaven.neoforged.net/NeoForge/pr2639")
+        content {
+            includeModule("net.neoforged", "neoforge")
+        }
+    }
 }
 
 base {

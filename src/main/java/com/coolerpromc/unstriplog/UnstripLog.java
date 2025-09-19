@@ -71,7 +71,7 @@ public class UnstripLog
             }
         }
 
-        if (event.getLevel().isClientSide){
+        if (event.getLevel().isClientSide()){
             event.setCancellationResult(InteractionResult.PASS);
             return;
         }
