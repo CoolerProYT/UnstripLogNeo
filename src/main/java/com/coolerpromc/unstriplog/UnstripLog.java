@@ -81,6 +81,11 @@ public class UnstripLog
             return;
         }
 
+        if (event.getEntity().getOffhandItem().getItem() == Items.SHIELD && !event.getEntity().isShiftKeyDown()){
+            event.setCancellationResult(InteractionResult.PASS);
+            return;
+        }
+
         if (!(event.getItemStack().getItem() instanceof AxeItem)){
             event.setCancellationResult(InteractionResult.PASS);
             return;
