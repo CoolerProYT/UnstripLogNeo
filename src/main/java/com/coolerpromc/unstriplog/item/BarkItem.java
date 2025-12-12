@@ -3,7 +3,7 @@ package com.coolerpromc.unstriplog.item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -31,14 +31,14 @@ public class BarkItem extends Item {
 
     private static void buildReverseStrippedMap() {
         for (Block block : BuiltInRegistries.BLOCK) {
-            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            Identifier id = BuiltInRegistries.BLOCK.getKey(block);
             String path = id.getPath(); // e.g. "stripped_oak_log"
 
             if (path.startsWith("stripped_") && (path.endsWith("_log") || path.endsWith("_wood") || path.endsWith("stem") || path.endsWith("hyphae"))) {
                 // Make sure the length of the path is greater than "stripped_" to avoid substring error
                 if (path.length() > "stripped_".length()) {
                     String originalPath = path.substring("stripped_".length());
-                    ResourceLocation originalId = ResourceLocation.fromNamespaceAndPath(id.getNamespace(), originalPath);
+                    Identifier originalId = Identifier.fromNamespaceAndPath(id.getNamespace(), originalPath);
 
                     Block original = BuiltInRegistries.BLOCK.getValue(originalId);
                     if (original != Blocks.AIR) {

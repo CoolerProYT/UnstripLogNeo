@@ -2,7 +2,7 @@ package com.coolerpromc.unstriplog;
 
 import com.coolerpromc.unstriplog.item.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -63,7 +63,7 @@ public class UnstripLog
         List<Block> LOGS = new ArrayList<>();
 
         for (Block block : BuiltInRegistries.BLOCK) {
-            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            Identifier id = BuiltInRegistries.BLOCK.getKey(block);
             String path = id.getPath();
 
             if ((path.endsWith("_log") || path.endsWith("_wood") || path.endsWith("stem") || path.endsWith("hyphae")) && !path.startsWith("stripped_")) {
