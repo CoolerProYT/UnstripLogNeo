@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "unstriplog:item/bark",
+    "model": {
+      "type": "unstriplog:bark"
+    }
+  }
+}
