@@ -1,7 +1,7 @@
 package com.coolerpromc.unstriplog.config;
 
 import com.coolerpromc.unstriplog.UnstripLog;
-import com.coolerpromc.unstriplog.handler.LogHandlerMod;
+import com.coolerpromc.unstriplog.handler.LogHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -67,7 +67,7 @@ public class BarkTypeConfig {
     private static void writeDefaults() {
         Set<String> addedBarks = new HashSet<>();
 
-        LogHandlerMod.BARK_TYPE.forEach((log, name) -> {
+        LogHandler.BARK_TYPE.forEach((log, name) -> {
             if (addedBarks.add(name)) { // add returns false if name already exists
                 ENTRIES.add(new BarkTypeEntry(name, UnstripLog.id("textures/item/" + name + "_bark.png")));
             }

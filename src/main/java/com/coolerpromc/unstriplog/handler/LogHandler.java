@@ -1,8 +1,12 @@
 package com.coolerpromc.unstriplog.handler;
 
 import com.coolerpromc.unstriplog.UnstripLog;
+import com.coolerpromc.unstriplog.config.BarkTypeConfig;
 import com.coolerpromc.unstriplog.config.RuntimeConfigAccess;
+import com.coolerpromc.unstriplog.config.UnstripDetailedConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -11,21 +15,58 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.Optional;
-
-import static com.coolerpromc.unstriplog.handler.LogHandlerMod.*;
+import java.util.*;
 
 @SuppressWarnings("deprecation")
-@EventBusSubscriber(modid = UnstripLog.MODID, bus = EventBusSubscriber.Bus.GAME)
-public class LogHandlerGame {
+@EventBusSubscriber(modid = UnstripLog.MODID)
+public class LogHandler {
+    public static List<Block> LOGS = new ArrayList<>();
+    public static final Map<Block, String> BARK_TYPE = new HashMap<>();
+    public static final Map<Block, Block> STRIPPED_LOG = new HashMap<>(); // stripped -> log
+
+    @SubscribeEvent
+    public static void onFMLCommonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            for (Block block : BuiltInRegistries.BLOCK) {
+                try {
+                    BlockState strippable = block.getToolModifiedState(block.defaultBlockState(), null, ItemAbilities.AXE_STRIP, false);
+                    if (strippable != null) {
+                        LOGS.add(block);
+                        STRIPPED_LOG.put(strippable.getBlock(), block);
+                    }
+                } catch (Exception ignored) {
+
+                }
+            }
+            AxeItem.STRIPPABLES.forEach((key, value) -> {
+                if (!LOGS.contains(key) && !STRIPPED_LOG.containsKey(value)) {
+                    LOGS.add(key);
+                    STRIPPED_LOG.put(value, key);
+                }
+            });
+            LOGS.forEach(block -> {
+                if(!block.builtInRegistryHolder().getKey().location().getNamespace().equals("minecraft")) return;
+                String name = block.builtInRegistryHolder().getKey().location().getPath().replace("_wood", "").replace("_log", "").replace("_block", "").replace("_stem", "").replace("_hyphae", "");
+                BARK_TYPE.put(block, name);
+            });
+            BarkTypeConfig.init();
+            UnstripDetailedConfig.init();
+        });
+    }
+
     @SubscribeEvent
     public static void onStrip(PlayerInteractEvent.RightClickBlock event) {
         if (event.getLevel().isClientSide()){

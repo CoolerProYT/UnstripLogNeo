@@ -1,3 +1,7 @@
+### 1.1.1
+- Added support for modded log that is not registered to STRIPPABLES field
+
+### 1.1.0
 - Added bark for each type of vanilla log/wood
 - Added common config to handle undefined log/wood and 'bark' item to drop/use
   - `item` field is for defining the item id to drop/use as bark when stripping and unstripping

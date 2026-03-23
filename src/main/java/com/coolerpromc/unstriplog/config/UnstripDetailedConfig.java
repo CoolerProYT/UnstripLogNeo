@@ -2,7 +2,7 @@ package com.coolerpromc.unstriplog.config;
 
 import com.coolerpromc.unstriplog.UnstripLog;
 import com.coolerpromc.unstriplog.component.ModDataComponents;
-import com.coolerpromc.unstriplog.handler.LogHandlerMod;
+import com.coolerpromc.unstriplog.handler.LogHandler;
 import com.coolerpromc.unstriplog.item.ModItems;
 import com.coolerpromc.unstriplog.network.ConfigSyncManager;
 import com.google.gson.Gson;
@@ -107,13 +107,15 @@ public class UnstripDetailedConfig {
     }
 
     private static void writeDefaults() {
-        LogHandlerMod.STRIPPED_LOG.forEach((key, value) -> {
-            ENTRIES.add(new LogEntry(
-                    value,
-                    key,
-                    new ItemEntry(ModItems.BARK, DataComponentPatch.builder().set(ModDataComponents.BARK_TYPE.get(), BarkTypeConfig.getByBase(LogHandlerMod.BARK_TYPE.get(value))).build()),
-                    Optional.empty()
-            ));
+        LogHandler.STRIPPED_LOG.forEach((key, value) -> {
+            if (LogHandler.BARK_TYPE.get(value) != null){
+                ENTRIES.add(new LogEntry(
+                        value,
+                        key,
+                        new ItemEntry(ModItems.BARK, DataComponentPatch.builder().set(ModDataComponents.BARK_TYPE.get(), BarkTypeConfig.getByBase(LogHandler.BARK_TYPE.get(value))).build()),
+                        Optional.empty()
+                ));
+            }
         });
 
         save();
