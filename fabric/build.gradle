@@ -11,6 +11,9 @@ dependencies {
 
     implementation include("com.electronwill.night-config:core:3.8.1")
     implementation include("com.electronwill.night-config:toml:3.8.1")
+
+    compileOnly "mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
 }
 
 loom {
@@ -59,17 +62,17 @@ publishMods {
     type = STABLE
     modLoaders.add("fabric")
     changelog = rootProject.file("changelog.md").text
-    displayName = mod_id + "-" + version
+    displayName = mod_id + "-" + project.version + "+" + minecraft_version + "-fabric"
 
     curseforge {
         projectId = "1268448"
         accessToken = findProperty("CF_TOKEN")
-        minecraftVersions.add(minecraft_version)
+        minecraftVersions.addAll("26.1", minecraft_version)
     }
 
     modrinth {
         projectId = 'ZGPVDCNi'
         accessToken = findProperty("MODRINTH_TOKEN")
-        minecraftVersions.add(minecraft_version)
+        minecraftVersions.addAll("26.1", minecraft_version)
     }
 }

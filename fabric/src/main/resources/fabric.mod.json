@@ -20,8 +20,12 @@
         ],
         "client": [
             "com.coolerpromc.unstriplog.UnstripLogClient"
+        ],
+        "jei_mod_plugin": [
+            "com.coolerpromc.unstriplog.integration.jei.UnstripLogJEIPlugin"
         ]
     },
+    "accessWidener": "unstriplog.classtweaker",
     "mixins": [
         "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"
