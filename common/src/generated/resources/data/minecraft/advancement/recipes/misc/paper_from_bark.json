@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bark": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unstriplog:bark"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:paper_from_bark"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bark"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:paper_from_bark"
+    ]
+  }
+}

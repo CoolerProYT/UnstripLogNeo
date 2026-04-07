@@ -1,0 +1,4 @@
+classTweaker v1 official
+accessible field net/minecraft/world/item/AxeItem STRIPPABLES Ljava/util/Map;
+accessible method net/minecraft/world/item/AxeItem getStripped (Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/Optional;
+accessible class net/minecraft/world/item/CreativeModeTab$TabVisibility
