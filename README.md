@@ -1,32 +1,69 @@
-# MultiLoader Template
+# UnstripLog
 
-This project provides a Gradle project template that can compile Minecraft mods for multiple modloaders using a common project for the sources. This project does not require any third party libraries or dependencies. If you have any questions or want to discuss the project, please join our [Discord](https://discord.myceliummod.network).
+A simple Minecraft mod that allows you to **unstrip logs** by re-applying bark to them. When you strip a log with an axe, it now drops a **Bark** item — and you can use that bark on a stripped log to restore it to its original state.
 
-## Getting Started
+Available for both **Fabric** and **NeoForge**.
 
-### IntelliJ IDEA
-This guide will show how to import the MultiLoader Template into IntelliJ IDEA. The setup process is roughly equivalent to setting up the modloaders independently and should be very familiar to anyone who has worked with their MDKs.
+## Features
 
-1. Clone or download this repository to your computer.
-2. Configure the project by setting the properties in the `gradle.properties` file. You will also need to change the `rootProject.name`  property in `settings.gradle`, this should match the folder name of your project, or else IDEA may complain.
-3. Open the template's root folder as a new project in IDEA. This is the folder that contains this README.md file and the gradlew executable.
-4. If your default JVM/JDK is not Java 25 you will encounter an error when opening the project. This error is fixed by going to `File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM` and changing the value to a valid Java 25 JVM. You will also need to set the Project SDK to Java 25. This can be done by going to `File > Project Structure > Project SDK`. Once both have been set open the Gradle tab in IDEA and click the refresh button to reload the project.
-5. Open your Run/Debug Configurations. Under the `Application` category there should now be options to run Fabric and NeoForge projects. Select one of the client options and try to run it.
-6. Assuming you were able to run the game in step 5 your workspace should now be set up.
+- 🪓 **Bark Drops** — Stripping a log with an axe now drops a Bark item.
+- 🪵 **Unstrip Logs** — Right-click a stripped log with the matching Bark item to restore it to its unstripped form.
+- 🔥 **Fuel** — Bark items can be used as furnace fuel (150 ticks / 7.5 seconds).
+- 🎨 **Per-Wood-Type Bark** — Each wood type (oak, birch, spruce, etc.) has its own distinct bark variant with unique textures.
+- ⚙️ **Highly Configurable** — JSON-based config files let you customize every log/bark mapping, add modded log support, and more.
+- 🔄 **Config Hot-Reload** — The detailed config watches for file changes and reloads automatically — no restart needed.
+- 🌐 **Server-Client Config Sync** — Config is synced from server to client so multiplayer servers stay consistent.
+- 📖 **JEI Integration** — Stripping and unstripping recipes are viewable in JEI (Just Enough Items).
 
-### Eclipse
-While it is possible to use this template in Eclipse it is not recommended. During the development of this template multiple critical bugs and quirks related to Eclipse were found at nearly every level of the required build tools. While we continue to work with these tools to report and resolve issues support for projects like these are not there yet. For now Eclipse is considered unsupported by this project. The development cycle for build tools is notoriously slow so there are no ETAs available.
+## How It Works
 
-## Development Guide
-When using this template the majority of your mod should be developed in the `common` project. The `common` project is compiled against the vanilla game and is used to hold code that is shared between the different loader-specific versions of your mod. The `common` project has no knowledge or access to ModLoader specific code, apis, or concepts. Code that requires something from a specific loader must be done through the project that is specific to that loader, such as the `fabric` or `neoforge` projects.
+1. **Strip a log** with an axe — it drops a Bark item on the ground.
+2. **Pick up the bark** and hold it in your hand.
+3. **Right-click a stripped log** with the bark — the log is restored to its original unstripped state, consuming one bark.
 
-Loader specific projects such as the `fabric` and `neoforge` project are used to load the `common` project into the game. These projects also define code that is specific to that loader. Loader specific projects can access all the code in the `common` project. It is important to remember that the `common` project can not access code from loader specific projects.
+## Configuration
 
-## Removing Platforms and Loaders
-While this template has support for many modloaders, new loaders may appear in the future, and existing loaders may become less relevant.
+Config files are located in your game directory under `config/unstriplog/`.
 
-Removing loader specific projects is as easy as deleting the folder, and removing the `include("projectname")` line from the `settings.gradle` file.
-For example if you wanted to remove support for `forge` you would follow the following steps:
+### `bark-type.json`
 
-1. Delete the subproject folder. For example, delete `MultiLoader-Template/forge`.
-2. Remove the project from `settings.gradle`. For example, remove `include("forge")`. 
+Defines the available bark types and their textures. Each entry has:
+- `name` — The bark type identifier (e.g. `"oak"`, `"birch"`)
+- `texture` — The texture resource location for the bark item
+
+### `unstrip-detailed.json`
+
+Defines the detailed log-to-bark mappings. Each entry has:
+- `base` — The original (unstripped) log block ID
+- `stripped` — The stripped log block ID
+- `drop` — The item dropped when stripping (with optional data components)
+- `unstrip_item` *(optional)* — A different item required to unstrip (defaults to the drop item)
+
+### General Config (Platform-specific)
+
+- `barkItem` — The item ID used as the default bark item (default: `unstriplog:bark`)
+- `allowUnknownLog` — Whether to allow stripping/unstripping of logs not explicitly listed in the detailed config (default: `true`)
+
+## Supported Platforms
+
+| Platform | Supported |
+|----------|-----------|
+| Fabric   | ✅        |
+| NeoForge | ✅        |
+
+## Dependencies
+
+| Dependency | Required |
+|------------|----------|
+| Fabric API | ✅ (Fabric) |
+| NeoForge   | ✅ (NeoForge) |
+| JEI        | ❌ Optional |
+
+## Minecraft Version
+
+- **Minecraft 26.1.1** (Range: `[26.1, 26.2)`)
+
+## Authors
+
+- **CoolerProMC**
+- **ChesyDev**
