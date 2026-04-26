@@ -26,7 +26,13 @@ public class NeoForgeUnstripLogConfig
 
     private static boolean validateItemId(final Object obj)
     {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(Identifier.parse(itemName));
+        if (!(obj instanceof String itemName)) return false;
+        try {
+            Identifier.parse(itemName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private NeoForgeUnstripLogConfig(ModConfigSpec.Builder builder) {

@@ -76,12 +76,12 @@ publishMods {
     curseforge {
         projectId = "1268448"
         accessToken = findProperty("CF_TOKEN")
-        minecraftVersions.addAll("26.1", minecraft_version)
+        minecraftVersions.addAll(minecraft_version)
     }
 
     modrinth {
         projectId = 'ZGPVDCNi'
         accessToken = findProperty("MODRINTH_TOKEN")
-        minecraftVersions.addAll("26.1", minecraft_version)
+        minecraftVersions.addAll(minecraft_version)
     }
 }
