@@ -1,3 +1,2 @@
 ## Changes
-- Changed versioning system
-- Fixed NeoForge crash regarding config value
+- Fixed non-log block unable to unstrip using dropped item
