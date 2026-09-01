@@ -5,7 +5,6 @@ import com.coolerpromc.unstriplog.config.BarkTypeConfig;
 import com.coolerpromc.unstriplog.config.RuntimeConfigAccess;
 import com.coolerpromc.unstriplog.config.UnstripDetailedConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,17 +14,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.*;
@@ -159,6 +155,24 @@ public class LogHandler {
 
     public static BlockState unstripped(BlockState block){
         Optional<RuntimeConfigAccess.RuntimeLogEntry> optional = RuntimeConfigAccess.byStripped(block.getBlock());
-        return optional.map(logEntry -> logEntry.base().defaultBlockState().setValue(RotatedPillarBlock.AXIS, block.getValue(RotatedPillarBlock.AXIS))).orElseGet(() -> STRIPPED_LOG.get(block.getBlock()).defaultBlockState().setValue(RotatedPillarBlock.AXIS, block.getValue(RotatedPillarBlock.AXIS)));
+        Block base = optional.map(RuntimeConfigAccess.RuntimeLogEntry::base).orElseGet(() -> STRIPPED_LOG.get(block.getBlock()));
+        if (base == null){
+            return block;
+        }
+        return copyProperties(block, base.defaultBlockState());
+    }
+
+    private static BlockState copyProperties(BlockState from, BlockState to){
+        BlockState result = to;
+        for (Property<?> property : from.getProperties()){
+            if (result.hasProperty(property)){
+                result = copyProperty(from, result, property);
+            }
+        }
+        return result;
+    }
+
+    private static <T extends Comparable<T>> BlockState copyProperty(BlockState from, BlockState to, Property<T> property){
+        return to.setValue(property, from.getValue(property));
     }
 }
